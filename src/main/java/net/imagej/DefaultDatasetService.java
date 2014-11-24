@@ -247,9 +247,9 @@ public final class DefaultDatasetService extends AbstractService implements
 	public Dataset open(final String source) throws IOException {
 		try {
 			final ReflectedUniverse ru = new ReflectedUniverse();
-			ru.exec("import io.scif.config.SCIFIOConfig;");
-			ru.exec("config = new SCIFIOConfig();");
-			ru.exec("config.imgOpenerSetIndex(0);");
+			ru.exec("import io.scif.config.SCIFIOConfig");
+			ru.exec("config = new SCIFIOConfig()");
+			ru.exec("config.imgOpenerSetIndex(0)");
 			return open(source, ru.getVar("config"));
 		}
 		catch (final ReflectException exc) {
@@ -267,18 +267,18 @@ public final class DefaultDatasetService extends AbstractService implements
 			ru.setVar("config", config);
 			ru.setVar("context", getContext());
 
-			ru.exec("import io.scif.img.ImgOpener;");
-			ru.exec("imageOpener = new ImgOpener(context);");
+			ru.exec("import io.scif.img.ImgOpener");
+			ru.exec("imageOpener = new ImgOpener(context)");
 
 			// skip min/max computation
-			ru.exec("config.imgOpenerSetComputeMinMax(false);");
+			ru.exec("config.imgOpenerSetComputeMinMax(false)");
 
 			// prefer planar array structure, for ImageJ1 and ImgSaver compatibility
-			ru.exec("import io.scif.config.SCIFIOConfig.ImgMode;");
-			ru.exec("config.imgOpenerSetImgModes(ImgMode.PLANAR);");
+			ru.exec("import io.scif.config.SCIFIOConfig.ImgMode");
+			ru.exec("config.imgOpenerSetImgModes(ImgMode.PLANAR)");
 
-			ru.exec("imgPluses = imageOpener.openImgs(source, config);");
-			return create((ImgPlus) ru.exec("imgPluses.get(0);"));
+			ru.exec("imgPluses = imageOpener.openImgs(source, config)");
+			return create((ImgPlus) ru.exec("imgPluses.get(0)"));
 		}
 		catch (final ReflectException exc) {
 			throw new IOException(exc);
